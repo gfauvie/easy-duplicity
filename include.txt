@@ -1,0 +1,7 @@
+/home
+/root
+/var/www
+/etc
+/backup
+/var/log
+/opt

@@ -1,0 +1,10 @@
+#!/bin/bash
+export AWS_ACCESS_KEY_ID="XXXXXX"
+export AWS_SECRET_ACCESS_KEY="XXXXXXXXXXXXXXXXX"
+export PASSPHRASE="XXXXXX"
+export REGION_NAME="us-west-1"
+export bucket="com.xxxxx.xx"
+export eraseafter="1M"
+export fullifolderthan="7D"
+export OLDERTHAN="12M"
+export MAILADDR="xxxxx@gmail.com"
