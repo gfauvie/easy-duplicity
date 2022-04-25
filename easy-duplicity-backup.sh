@@ -50,10 +50,10 @@ if [ $is_running -eq 0 ]; then
     trace "------------------------------------"
 
     # Send the daily log file by email
-    cat "$DAILYLOGFILE" | mail -s "Duplicity Backup Log for $HOST - $DATE" $MAILADDR
+    cat "$DAILYLOGFILE" | mail -aFrom:$mailfrom -s "Duplicity Backup Log for $HOST - $DATE" $MAILADDR
     BACKUPSTATUS=`cat "$DAILYLOGFILE" | grep Errors | awk '{ print $2 }'`
     if [ "$BACKUPSTATUS" != "0" ]; then
-       cat "$DAILYLOGFILE" | mail -s "Duplicity Backup Log for $HOST - $DATE" $MAILADDR
+       cat "$DAILYLOGFILE" | mail -aFrom:$mailfrom -s "Duplicity Backup Log for $HOST - $DATE" $MAILADDR
     elif [ "$FULL" = "full" ]; then
         echo "$(date +%d%m%Y_%T) Full Back Done" | tee -a  $FULLBACKLOGFILE
     fi
