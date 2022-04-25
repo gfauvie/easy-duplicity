@@ -15,6 +15,7 @@ FULLBACKLOGFILE="/var/log/duplicity/backup.full.log"
 HOST=`hostname`
 DATE=`date +%Y-%m-%d`
 TODAY=$(date +%d%m%Y)
+back_time=$(date +%Y-%m-%d -d "$DATE -$OLDERTHAN days")
 
 is_running=$(ps -ef | grep duplicity  | grep python | wc -l)
 
@@ -41,7 +42,7 @@ if [ $is_running -eq 0 ]; then
 
     trace "... removing old backups"
 
-    duplicity remove-older-than  ${OLDER_THAN}  s3://s3-$REGION_NAME.amazonaws.com/$bucket/$HOST/ >> ${DAILYLOGFILE} 2>&1
+    duplicity remove-older-than  $back_time  s3://s3-$REGION_NAME.amazonaws.com/$bucket/$HOST/ >> ${DAILYLOGFILE} 2>&1
     trace "... backing up filesystem"
 
     duplicity $type --asynchronous-upload --progress --full-if-older-than $fullifolderthan --include-filelist=/opt/easy-duplicity/include.txt --exclude=/** --s3-region-name=$REGION_NAME --ssl-no-check-certificate  / s3://s3-$REGION_NAME.amazonaws.com/$bucket/$HOST/ >> ${DAILYLOGFILE}
